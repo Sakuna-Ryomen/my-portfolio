@@ -1,10 +1,12 @@
+import thinkImage from '../../assets/think2.png';
+
 const LeftContent = () => {
   return (
     <div className="h-screen w-1/3 flex items-center justify-around">
       <div className="flex flex-col gap-4  items-center">
         <img
           className="h-50 drop-shadow-[2px_5px_10px_rgba(255,191,0,0.8)]"
-          src="/src/assets/think2.png"
+          src={thinkImage}
           alt="think"
         />
         {/* <h1 className="h-52 w-52 border border-white/20   flex flex-col items-center justify-center rounded-full text-8xl p-2 font-bold text-white bg-white/10 backdrop-blur-lg">AM</h1> */}
