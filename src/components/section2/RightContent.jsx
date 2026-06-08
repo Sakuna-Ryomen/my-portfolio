@@ -34,7 +34,7 @@ const RightContent = () => {
         </div>
         <div className="w-5/6 flex flex-wrap p-2 gap-4  justify-center">
           {cardData.map((card, index) => (
-            <Cards title={card.title} index={index} cardData={cardData} />
+            <Cards key={index} title={card.title} index={index} cardData={cardData} />
           ))}
         </div>
       </div>

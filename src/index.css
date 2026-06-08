@@ -1,5 +1,44 @@
-@import "tailwindcss";
+ @import "tailwindcss";
+
+body{
+	background-color: #000;
+}
 
 html {
 	scroll-behavior: smooth;
 }
+
+.hide-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+/* 
+@keyframes scroll1{
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translate(calc(100%))
+	}
+}
+
+.animate-scroll{
+	animation: scroll1 20s linear reverse infinite;
+}
+
+@keyframes scroll2{
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translate(calc(0%))
+	}
+}
+
+.animate-scroll-reverse{
+	animation: scroll2 20s linear  infinite;
+} */

@@ -1,10 +1,18 @@
+import { ContactContext } from './../../Contexts/ContactContext';
+import { useContext } from 'react';
+
 const NavigationMenu = () => {
+ const [, setClick] = useContext(ContactContext);
+   
+ 
+
   return (
     <nav
+      
       className="
-      h-[6vh] w-3/4 lg:w-1/3
+      h-[6vh] lg:w-1/3 md:w-2/4  sm:w-4/4
       flex items-center justify-between
-      rounded-full
+      rounded-full 
       px-8 py-5 m-2
       bg-white/10
       backdrop-blur-lg
@@ -16,11 +24,11 @@ const NavigationMenu = () => {
       text-white text-xl font-medium
       "
     >
-     <a href="#home">Home</a>
-     <a href="#about">About</a>
-     <a href="#skills">Skills</a>
-     <a href="#projects">Projects</a>
-     {/* <a href="#certifications">Certifications</a> */}
+     <a onClick={() => setClick(false)}  href="/#home">Home</a>
+     <a onClick={() => setClick(false)} href="/#about">About</a>
+     <a onClick={() => setClick(false)} href="/#skills">Skills</a>
+     <a onClick={() => setClick(false)} href="/#projects">Projects</a>
+     {/* <a href="/#certifications">Certifications</a> */}
     </nav>
   );
 };
