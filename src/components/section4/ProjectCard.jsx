@@ -7,7 +7,7 @@ const ProjectCard = (props) => {
   return (
     <div
       id={props.id}
-      className={`h-14/15 lg:w-1/3 md:w-3/5 hover:scale-105 focus:bg-red-300 hover:bg-gray-500/30 flex flex-col bg-gray-500/20 rounded-3xl items-center justify-between p-2 transition-transform ${flipped ? "rotate-y-180" : ""}`}
+      className={`h-14/15 lg:w-1/3 md:w-3/5 hover:scale-105   focus:bg-red-300 hover:bg-gray-500/30 flex flex-col bg-gray-500/20 rounded-3xl items-center justify-between p-2 transform-3d  transition-transform ${flipped ? "rotate-y-180" : ""}`}
       onClick={() => {
         console.log(!flipped);
         setFlipped(!flipped);

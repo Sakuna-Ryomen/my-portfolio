@@ -5,7 +5,7 @@ const Section5 = () => {
   return (
     <div
       id="contact"
-      className="relative top-20 h-6/7  w-full flex flex-col items-center  text-white scroll-smooth snap-start "
+      className="relative top-22   h-6/7  w-full flex flex-col items-center  text-white scroll-smooth snap-start "
     >
       <div className="h-fit w-full flex flex-col gap-2 px-2 items-center justify-center ">
         <h1 className="flex justify-center text-2xl font-medium">

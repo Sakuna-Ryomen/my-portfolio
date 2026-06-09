@@ -7,7 +7,7 @@ const UpperCard = () => {
   const [skills] = useContext(SkillDataContext);
 
   return (
-    <div className=" h-60 w-full overflow-hidden p-2 m-4 flex flex-row items-center justify-center gap-8">
+    <div className=" h-60 w-full overflow-hidden p-2 m-2 flex flex-row items-center justify-center gap-8">
           <motion.div
             className="flex gap-8 w-max"
             initial={{ x: "80%" }}

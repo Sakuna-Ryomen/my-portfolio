@@ -14,7 +14,7 @@ const AppContent = () => {
   const [click] = useContext(ContactContext);
 
   return (
-    <div className="h-screen w-full relative overflow-y-scroll hide-scrollbar scroll-smooth snap-y snap-mandatory">
+    <div className="h-screen w-full relative overflow-y-scroll  hide-scrollbar scroll-smooth snap-y snap-mandatory">
       <div className="fixed w-full top-0 left-0 z-50">
         <NavBar />
       </div>

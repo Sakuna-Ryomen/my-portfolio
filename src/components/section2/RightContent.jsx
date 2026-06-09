@@ -1,13 +1,14 @@
 import Cards from "./Cards";
 import Stats from "./Stats";
+import { Palette, Sparkles, Brain, Layout, Monitor } from "lucide-react";
 
 const RightContent = () => {
   const cardData = [
-    { title: "Frontend Development" },
-    { title: "UI/UX Design" },
-    { title: "Responsive Design" },
-    { title: "Modern Web Technologies" },
-    { title: "AI Applications" },
+    { icon: <Monitor strokeWidth={0.75} />, title: "Frontend Development" },
+    { icon: <Palette strokeWidth={0.75} />, title: "UI/UX Design" },
+    { icon: <Layout strokeWidth={0.75} />, title: "Responsive Design" },
+    { icon: <Sparkles strokeWidth={0.75} />, title: "Modern Web Technologies" },
+    { icon: <Brain strokeWidth={0.75} />, title: "AI Applications" },
   ];
 
   // const listItems = [
@@ -17,10 +18,10 @@ const RightContent = () => {
   // ];
 
   return (
-    <div className="h-4/5 w-4/5  relative top-8 flex items-start justify-between  flex-wrap">
-      <h2 className="text-xl leading-8 text-pretty font-serif  w-full p-4 m-4">
+    <div className="h-4/5 w-4/5  relative top-8 flex items-center justify-center  flex-wrap">
+      <h2 className="text-xl max-w-[700px] leading-8 text-pretty font-serif  w-full p-4 m-4">
         Passionate <span className="text-amber-400">BSc IT student</span> and
-        aspiring <span className="text-amber-400">Full-Stack developer</span>{" "}
+        aspiring <span className="text-amber-400">React developer</span>{" "}
         focused on building clean, responsive, and user-friendly web
         experiences. Currently learning the{" "}
         <span className="text-amber-400">MERN stack</span> and exploring{" "}
@@ -34,7 +35,7 @@ const RightContent = () => {
         </div>
         <div className="w-5/6 flex flex-wrap p-2 gap-4  justify-center">
           {cardData.map((card, index) => (
-            <Cards key={index} title={card.title} index={index} cardData={cardData} />
+            <Cards key={index} icon={card.icon} title={card.title} index={index} cardData={cardData} />
           ))}
         </div>
       </div>
