@@ -1,23 +1,19 @@
-
 const Cards = (props) => {
-
-  // if (props.name === "GitHub") {
-  //   return (
-  //     <div className='w-50 h-50 bg-gray-100/10 p-8 backdrop-blur-lg rounded-lg flex flex-col items-center hover:scale-110  justify-center gap-4'>
-  //       <div style={{}} className='h-22 w-22 bg-white animate-spin [animation-duration:8s] rounded-full  flex items-center justify-center'>
-  //       <img className='h-22 w-22 rounded-full' src={props.image} alt="" />
-  //       </div>
-  //     <h3 className='text-xl font-bold'>{props.name}</h3>
-  //   </div>
-  //   )
-  // }
-
   return (
-    <div className='w-50 h-50 border  border-white/20 bg-gray-100/10 p-8 backdrop-blur-lg rounded-lg flex flex-col items-center hover:-translate-y-2 hover:border-yellow-400/50 transition-all duration-300 hover:scale-110 hover: justify-center gap-4'>
-        <div style={{}} className='h-25 w-25 animate-spin [animation-duration:8s]  rounded-full flex items-center justify-center p-2'>
-        <img className='h-22 w-22 rounded-full' src={props.image} alt="" />
-        </div>
-      <h3 className='text-xl font-bold'>{props.name}</h3>
+    <div className='skill-card w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 border border-white/15 bg-white/5 p-3 sm:p-5 md:p-6 backdrop-blur-lg rounded-xl flex flex-col items-center justify-center gap-2 sm:gap-3 cursor-default transition-all duration-300 hover:-translate-y-2 hover:bg-amber-400/8'>
+      <div className='animate-spin [animation-duration:10s] rounded-full flex items-center justify-center p-1'>
+        <img
+          className='h-10 w-10 sm:h-14 sm:w-14 md:h-18 md:w-18 rounded-full object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]'
+          src={props.image}
+          alt={props.name}
+        />
+      </div>
+      <h3
+        className='text-xs sm:text-sm md:text-base font-semibold text-center text-white/90'
+        style={{ fontFamily: 'var(--font-body)' }}
+      >
+        {props.name}
+      </h3>
     </div>
   )
 }

@@ -1,44 +1,152 @@
  @import "tailwindcss";
 
-body{
-	background-color: #000;
+/* ─── Font Setup ─────────────────────────────── */
+:root {
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --amber: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.35);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
+body {
+  background-color: #000;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ─── Cursor Glow ─────────────────────────────── */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(
+    600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    rgba(245, 158, 11, 0.055),
+    transparent 55%
+  );
+  transition: background 0.1s ease;
+}
+
+/* ─── Touch-friendly elements ─────────────────── */
+a, button {
+  touch-action: manipulation;
+}
+
+/* ─── Scrollbar ───────────────────────────────── */
 .hide-scrollbar {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
 .hide-scrollbar::-webkit-scrollbar {
-	display: none;
-}
-/* 
-@keyframes scroll1{
-	from {
-		transform: translateX(0);
-	}
-	to {
-		transform: translate(calc(100%))
-	}
+  display: none;
 }
 
-.animate-scroll{
-	animation: scroll1 20s linear reverse infinite;
+/* ─── Mobile inputs – prevent iOS zoom ───────── */
+input, textarea, select {
+  font-size: 16px;
 }
 
-@keyframes scroll2{
-	from {
-		transform: translateX(-100%);
-	}
-	to {
-		transform: translate(calc(0%))
-	}
+/* ─── Floating label inputs ───────────────────── */
+.input-wrapper {
+  position: relative;
+}
+.input-wrapper input,
+.input-wrapper textarea {
+  padding-top: 20px;
+  padding-bottom: 6px;
+}
+.input-wrapper .float-label {
+  position: absolute;
+  left: 42px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+}
+.input-wrapper textarea ~ .float-label {
+  top: 18px;
+  transform: none;
+}
+.input-wrapper input:focus ~ .float-label,
+.input-wrapper input:not(:placeholder-shown) ~ .float-label,
+.input-wrapper textarea:focus ~ .float-label,
+.input-wrapper textarea:not(:placeholder-shown) ~ .float-label {
+  top: 8px;
+  transform: none;
+  font-size: 10px;
+  color: var(--amber);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.animate-scroll-reverse{
-	animation: scroll2 20s linear  infinite;
-} */
+/* ─── Input amber focus glow ─────────────────── */
+.amber-input:focus {
+  outline: none;
+  border-color: rgba(245, 158, 11, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15), 0 0 12px rgba(245, 158, 11, 0.1);
+}
+
+/* ─── Skill card glow ────────────────────────── */
+.skill-card:hover {
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.4), 0 0 48px rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.5) !important;
+}
+
+/* ─── Toast notification ─────────────────────── */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(20px) scale(0.95); }
+}
+.toast-enter { animation: toast-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.toast-exit  { animation: toast-out 0.3s ease forwards; }
+
+/* ─── Section divider accent ─────────────────── */
+.section-accent-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.3), transparent);
+}
+
+/* ─── Typewriter cursor blink ────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: #f59e0b;
+  margin-left: 4px;
+  vertical-align: middle;
+  border-radius: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+/* ─── Scroll snap container for mobile ───────── */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+}

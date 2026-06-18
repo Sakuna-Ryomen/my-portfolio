@@ -1,138 +1,123 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { User, Mail, Phone, MessageSquare, Send } from "lucide-react";
+import { User, Mail, Phone, MessageSquare, Send, CheckCircle } from "lucide-react";
 
+/* ── Toast Component ─────────────────────────── */
+const Toast = ({ visible }) => (
+  <div
+    className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 bg-zinc-900 border border-amber-400/40 text-white px-5 py-3.5 rounded-2xl shadow-[0_8px_30px_rgba(245,158,11,0.25)] ${
+      visible ? "toast-enter" : "toast-exit"
+    }`}
+  >
+    <CheckCircle className="text-amber-400 w-5 h-5 shrink-0" />
+    <div>
+      <p className="font-semibold text-sm" style={{ fontFamily: "var(--font-body)" }}>
+        Message sent!
+      </p>
+      <p className="text-xs text-white/55" style={{ fontFamily: "var(--font-body)" }}>
+        I'll get back to you soon 🚀
+      </p>
+    </div>
+  </div>
+);
+
+/* ── Floating Label Input ────────────────────── */
+const FloatInput = ({ icon: Icon, label, type = "text", value, onChange, required = false }) => (
+  <div className="input-wrapper relative flex items-center w-full">
+    <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 z-10" strokeWidth={1.5} />
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      required={required}
+      placeholder=" "
+      className="amber-input h-14 w-full bg-white/5 border border-white/15 text-white rounded-xl pl-11 pr-4 pt-5 pb-2 text-sm transition-all duration-200"
+      style={{ fontFamily: "var(--font-body)" }}
+    />
+    <span className="float-label">{label}</span>
+  </div>
+);
+
+/* ── Email Form ──────────────────────────────── */
 const EmailForm = () => {
   const [fname, setFName] = useState("");
   const [lname, setLName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [text, setText] = useState("");
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastShown, setToastShown] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const showToast = () => {
+    setToastShown(true);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 4000);
+    setTimeout(() => setToastShown(false), 4500);
+  };
 
   const handerSubmit = (event) => {
     event.preventDefault();
+    setSending(true);
     const serviceId = "service_zv5oglb";
     const contactTemplateId = "template_u2s0av6";
     const autoReplyTemplateId = "template_iejlgdb";
     const publicKey = "g6G5K61qZMs8yKmiD";
-
     const templateParams = {
-      first_name: fname,
-      last_name: lname,
-      email: email,
-      phone: phone,
-      message: text,
+      first_name: fname, last_name: lname,
+      email, phone, message: text,
       time: new Date().toLocaleString(),
     };
 
-    emailjs
-      .send(serviceId, contactTemplateId, templateParams, publicKey)
-      //   .send(serviceId, autoReplyTemplateId, templateParams, publicKey)
-      .then((response) => {
-        console.log("Email sent successfully!", response);
-        setFName("");
-        setLName("");
-        setEmail("");
-        setPhone("");
-        setText("");
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-      });
+    const reset = () => { setFName(""); setLName(""); setEmail(""); setPhone(""); setText(""); setSending(false); showToast(); };
 
-    emailjs
-      //   .send(serviceId, contactTemplateId, templateParams, publicKey)
-      .send(serviceId, autoReplyTemplateId, templateParams, publicKey)
-      .then((response) => {
-        console.log("Email sent successfully!", response);
-        setFName("");
-        setLName("");
-        setEmail("");
-        setPhone("");
-        setText("");
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
-      });
+    emailjs.send(serviceId, contactTemplateId, templateParams, publicKey)
+      .then(reset).catch(() => setSending(false));
+    emailjs.send(serviceId, autoReplyTemplateId, templateParams, publicKey).catch(() => {});
   };
+
   return (
-    <div className="h-full w-full flex  justify-between">
+    <>
+      {toastShown && <Toast visible={toastVisible} />}
       <form
-        onSubmit={(event) => handerSubmit(event)}
-        className="w-full p-4 items-center flex flex-col gap-4"
-        action=""
+        onSubmit={handerSubmit}
+        className="w-full p-3 sm:p-4 flex flex-col gap-3"
       >
-        <div className="h-12 w-full flex flex-row gap-4 justify-around">
-          <div className="relative hover:scale-105 focus:scale-105 flex items-center w-1/2">
-            <User className="absolute left-4" strokeWidth={0.75} />
-            <input
-              type="text"
-              value={fname}
-              onChange={(event) => setFName(event.target.value)}
-              required={true}
-              placeholder="First Name"
-              className="h-full w-full border  border-white/30 rounded-xl flex gap-4 p-2 pl-13 px-4 text-lg placeholder-shown:font-medium placeholder-shown:text-lg"
-            />
-          </div>
-          <div className="relative hover:scale-105 focus:scale-105 flex items-center w-1/2">
-            <User className="absolute left-4" strokeWidth={0.75} />
-            <input
-              type="text"
-              value={lname}
-              onChange={(event) => setLName(event.target.value)}
-              required={true}
-              placeholder="Last Name"
-              className="h-full w-full border border-white/30 rounded-xl flex gap-4 p-2 pl-13 px-4 text-lg placeholder-shown:font-medium placeholder-shown:text-lg"
-            />
-          </div>
+        {/* Name row */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <FloatInput icon={User} label="First Name" value={fname} onChange={(e) => setFName(e.target.value)} required />
+          <FloatInput icon={User} label="Last Name" value={lname} onChange={(e) => setLName(e.target.value)} required />
         </div>
-        <div className="relative hover:scale-105 focus:scale-105 flex items-center w-full">
-          <Mail className="absolute left-4" strokeWidth={0.75} />
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required={true}
-            placeholder="Email"
-            className="border border-white/30 h-12 w-full p-2 px-4 pl-13  text-lg rounded-xl placeholder-shown:font-medium placeholder-shown:text-lg"
-          />
-        </div>
-        <div className="relative hover:scale-105 focus:scale-105 flex items-center w-full">
-          <Phone className="absolute left-4" strokeWidth={0.75} />
-          <input
-            type="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            placeholder="Phone No. (Optional)"
-            className="border border-white/30 h-12 w-full p-2 px-4 pl-13  text-lg rounded-xl placeholder-shown:font-medium placeholder-shown:text-lg"
-          />
-        </div>
-        <div className="relative hover:scale-105 focus:scale-105 flex items-start w-full">
-          <MessageSquare className="absolute left-4 top-3" strokeWidth={0.75} />
+
+        <FloatInput icon={Mail} label="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <FloatInput icon={Phone} label="Phone (Optional)" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+        {/* Textarea */}
+        <div className="input-wrapper relative flex items-start w-full">
+          <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-white/40 z-10" strokeWidth={1.5} />
           <textarea
             value={text}
-            required={true}
-            onChange={(event) => setText(event.target.value)}
-            placeholder="Share Your Thoughts"
-            className="h-30 w-full border border-white/30 p-2 px-4 pl-12 rounded-xl  placeholder-shown:font-medium placeholder-shown:text-lg"
+            required
+            onChange={(e) => setText(e.target.value)}
+            rows={4}
+            placeholder=" "
+            className="amber-input w-full bg-white/5 border border-white/15 text-white rounded-xl pl-11 pr-4 pt-7 pb-3 text-sm resize-none transition-all duration-200"
+            style={{ fontFamily: "var(--font-body)" }}
           />
+          <span className="float-label">Your Message</span>
         </div>
+
         <button
           type="submit"
-          onClick={() => {
-            console.log(fname);
-            console.log(lname);
-            console.log(email);
-            console.log(phone);
-            console.log(text);
-          }}
-          className="border border-white/30 h-fit w-fit px-4 py-2 bg-white/10 active:scale-95 hover:bg-white/20 hover:shadow-xl hover:scale-105 rounded-4xl flex flex-row gap-2 items-center text-xl font-medium font-serif backdrop-blur-md"
+          disabled={sending}
+          className="self-start flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 text-black font-semibold text-sm px-6 py-3 rounded-full shadow-[0_6px_20px_rgba(245,158,11,0.4)] hover:shadow-[0_8px_28px_rgba(245,158,11,0.55)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+          style={{ fontFamily: "var(--font-body)" }}
         >
-          <Send strokeWidth={1} />
-          Send Message
+          <Send strokeWidth={1.5} size={16} />
+          {sending ? "Sending…" : "Send Message"}
         </button>
       </form>
-    </div>
+    </>
   );
 };
 
